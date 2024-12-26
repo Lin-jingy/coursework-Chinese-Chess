@@ -4,18 +4,63 @@ import Board from './src/Board/Board';
 import moveChess from './src/Move/moveChess'
 import isWin from './src/Check/isWin';
 
+function deepCopy(obj) {
+    if (obj === null || typeof obj !== 'object') {
+        return obj;
+    }
 
-const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver }) => {
+    if (obj instanceof Date) {
+        return new Date(obj.getTime());
+    }
+
+    if (obj instanceof Array) {
+        const copy = [];
+        for (let i = 0, len = obj.length; i < len; i++) {
+            copy[i] = deepCopy(obj[i]);
+        }
+        return copy;
+    }
+
+    if (obj instanceof Object) {
+        const copy = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                copy[key] = deepCopy(obj[key]);
+            }
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
+
+const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove }) => {
     const [board, setBoard] = useState([]);
     const [canMoveBoard, setCanMoveBoard] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
-
+    const [savedBoard, saveBoard] = useState(Board.init);
     const initCanMoveBoard = () => { return Array.from(Array(10), () => Array(9).fill(false)); };
+
 
     useEffect(() => {
         setBoard(Board.board);
         setCanMoveBoard(initCanMoveBoard());
     }, []);
+    useEffect(() => {
+        // console.log(savedBoard);
+        if (backMove === true) {
+            if (savedBoard === null) {
+                alert("不允许连续悔棋!");
+                return;
+            }
+            Board.board = savedBoard;
+            setBoard(Board.board);
+            switchPlayer();
+            saveBoard(null);
+            setBackMove(false);
+        }
+    }, [backMove]);
 
     const { width, height } = Dimensions.get('window');
     const numRows = 10;
@@ -74,6 +119,7 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver }) => {
         if (canMoveBoard[rowIndex][colIndex]) {
             // 如果点击的是一个可以移动到的位置
             if (selectedPiece) {
+                saveBoard(deepCopy(Board.board));
                 if (moveChess(selectedPiece.row, selectedPiece.col, rowIndex, colIndex)) {
                     setBoard(Board.board);
                     setCanMoveBoard(initCanMoveBoard());

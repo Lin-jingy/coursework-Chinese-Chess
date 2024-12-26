@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import ShowBoard from './ShowBoard';
+import Board from './src/Board/Board';
 
 const App = () => {
     const { width, height } = Dimensions.get('window');
@@ -8,7 +9,7 @@ const App = () => {
 
     const [gameOver, setGameOver] = useState(false);
     const [flag, setFlag] = useState(2); // 1 表示黑方，2 表示红方
-
+    const [backMove, setBackMove] = useState(false);
     const switchPlayer = () => setFlag(3 - flag); // 切换玩家
 
     // 计算按钮和文字的样式
@@ -26,7 +27,7 @@ const App = () => {
     if (width / height > aspectRatio) {
         return (
             <SafeAreaView style={styles.container}>
-                <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} />
+                <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} />
                 <View style={styles.buttonContainer}>
                     {/* 红方按钮组 */}
                     <View style={styles.playerGroup}>
@@ -50,7 +51,11 @@ const App = () => {
                             <CustomButton
                                 title="悔棋"
                                 color="#FF0000"
-                                onPress={() => console.log('红方悔棋')}
+                                onPress={() => {
+                                    console.log('红方悔棋');
+                                    setBackMove(true);
+                                }}
+                                disabled={flag === 2}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
@@ -79,7 +84,11 @@ const App = () => {
                             <CustomButton
                                 title="悔棋"
                                 color="#000000"
-                                onPress={() => console.log('黑方悔棋')}
+                                onPress={() => {
+                                    console.log('黑方悔棋');
+                                    setBackMove(true);
+                                }}
+                                disabled={flag === 1}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
@@ -100,7 +109,11 @@ const App = () => {
                             <CustomButton
                                 title="悔棋"
                                 color="#000000"
-                                onPress={() => console.log('黑方悔棋')}
+                                onPress={() => {
+                                    console.log('黑方悔棋');
+                                    setBackMove(true);
+                                }}
+                                disabled={flag === 2}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
@@ -125,7 +138,7 @@ const App = () => {
 
                         </View>
                     </View>
-                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} />
+                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} />
                     {/* 红方按钮组 */}
                     <View style={styles.playerGroup}>
                         <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>红方</Text>
@@ -148,7 +161,11 @@ const App = () => {
                             <CustomButton
                                 title="悔棋"
                                 color="#FF0000"
-                                onPress={() => console.log('红方悔棋')}
+                                onPress={() => {
+                                    console.log('红方悔棋');
+                                    setBackMove(true);
+                                }}
+                                disabled={flag === 1}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
@@ -161,10 +178,11 @@ const App = () => {
     }
 };
 
-const CustomButton = ({ title, onPress, color, buttonWidth, buttonHeight, fontSize, buttonTextStyles }) => (
+const CustomButton = ({ title, onPress, color, buttonWidth, buttonHeight, fontSize, buttonTextStyles, disabled }) => (
     <TouchableOpacity
         style={[styles.customButton, { backgroundColor: color, width: buttonWidth, height: buttonHeight }]}
         onPress={onPress}
+        disabled={disabled}
     >
         <Text style={[styles.buttonText, { fontSize }, buttonTextStyles]}>
             {title}
