@@ -80,7 +80,6 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver }) => {
                     switchPlayer(); // 切换玩家
                     setSelectedPiece(null); // 移动后取消选中
                 }
-
             }
         } else {
             // 如果点击的是己方棋子，则显示可移动位置
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
         fontFamily: 'monospace',
         fontWeight: '600',
         userSelect: 'none',
-        transition: 'margin 0.5s ease',
+        // transition: 'margin 0.5s ease',
     },
 });
 
