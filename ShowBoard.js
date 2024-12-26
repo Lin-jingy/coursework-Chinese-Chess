@@ -73,11 +73,15 @@ const ShowBoard = ({ gameOver, flag, switchPlayer }) => {
         if (canMoveBoard[rowIndex][colIndex]) {
             // 如果点击的是一个可以移动到的位置
             if (selectedPiece) {
-                const fromChess = Board.board[fromRow][fromCol];
+                const fromChess = Board.board[selectedPiece.row][selectedPiece.col];
+                const toChess = Board.board[rowIndex][colIndex];
                 moveChess(selectedPiece.row, selectedPiece.col, rowIndex, colIndex);
                 if (Board.checkWin(3 - flag)) {
                     // 弹窗
-                    
+
+                    //rollback
+                    Board.board[selectedPiece.row][selectedPiece.col] = fromChess;
+                    Board.board[rowIndex][colIndex] = toChess;
                 }
                 setBoard(Board.board);
                 setCanMoveBoard(initCanMoveBoard());
