@@ -7,9 +7,6 @@ const moveChess = (fromRow, fromCol, toRow, toCol) => {
         alert("正在被将军");
         return false;
     }
-
-    console.log("trymove", tryMove(fromRow, fromCol, toRow, toCol));
-
     const fromChess = Board.board[fromRow][fromCol];
 
     if (fromChess.name === "将" || fromChess.name === "帅") {
