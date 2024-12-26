@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet, ImageBackground, Text, Dimensions, Alert } from 'react-native';
 import Board from './src/Board/Board';
 import moveChess from './src/Move/moveChess'
+import isWin from './src/Check/isWin';
 
 
-const ShowBoard = ({ gameOver, flag, switchPlayer }) => {
+const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver }) => {
     const [board, setBoard] = useState([]);
     const [canMoveBoard, setCanMoveBoard] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
@@ -73,20 +74,13 @@ const ShowBoard = ({ gameOver, flag, switchPlayer }) => {
         if (canMoveBoard[rowIndex][colIndex]) {
             // 如果点击的是一个可以移动到的位置
             if (selectedPiece) {
-                const fromChess = Board.board[selectedPiece.row][selectedPiece.col];
-                const toChess = Board.board[rowIndex][colIndex];
-                moveChess(selectedPiece.row, selectedPiece.col, rowIndex, colIndex);
-                if (Board.checkWin(3 - flag)) {
-                    // 弹窗
-
-                    //rollback
-                    Board.board[selectedPiece.row][selectedPiece.col] = fromChess;
-                    Board.board[rowIndex][colIndex] = toChess;
+                if (moveChess(selectedPiece.row, selectedPiece.col, rowIndex, colIndex)) {
+                    setBoard(Board.board);
+                    setCanMoveBoard(initCanMoveBoard());
+                    switchPlayer(); // 切换玩家
+                    setSelectedPiece(null); // 移动后取消选中
                 }
-                setBoard(Board.board);
-                setCanMoveBoard(initCanMoveBoard());
-                switchPlayer(); // 切换玩家
-                setSelectedPiece(null); // 移动后取消选中
+
             }
         } else {
             // 如果点击的是己方棋子，则显示可移动位置
@@ -99,6 +93,13 @@ const ShowBoard = ({ gameOver, flag, switchPlayer }) => {
                 }
                 setCanMoveBoard(tmp);
             }
+        }
+        if (isWin(1)) {
+            alert("黑方获胜");
+            setGameOver(true);
+        } else if (isWin(2)) {
+            alert("红方获胜");
+            setGameOver(true);
         }
     };
     return (

@@ -26,7 +26,7 @@ const App = () => {
     if (width / height > aspectRatio) {
         return (
             <SafeAreaView style={styles.container}>
-                <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} />
+                <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} />
                 <View style={styles.buttonContainer}>
                     {/* 红方按钮组 */}
                     <View style={styles.playerGroup}>
@@ -125,7 +125,7 @@ const App = () => {
 
                         </View>
                     </View>
-                    <ShowBoard gameOver={gameOver} flag={flag} setFlag={switchPlayer} />
+                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} />
                     {/* 红方按钮组 */}
                     <View style={styles.playerGroup}>
                         <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>红方</Text>
