@@ -133,18 +133,15 @@ const App = () => {
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
-                            />
-                            {/* 悔棋按钮 */}
+                            />  
+                        </View>
+                        <View style={styles.playerGroup}>
                             <CustomButton
                                 title="悔棋"
                                 color="#808080"
                                 onPress={() => {
-                                    if (backMove) {
-                                        alert('已悔棋');
-                                        setBackMove(false);
-                                    } else {
-                                        alert('无法悔棋');
-                                    }
+                                    console.log('悔棋');
+                                    setBackMove(true);
                                 }}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
