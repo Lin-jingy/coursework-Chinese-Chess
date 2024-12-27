@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, TouchableOpacity, Text, View, Dimensions } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity, Text, View, Dimensions, Alert } from 'react-native';
 import ShowBoard from './ShowBoard';
 import Board from './src/Board/Board';
 
@@ -29,70 +29,60 @@ const App = () => {
             <SafeAreaView style={styles.container}>
                 <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} />
                 <View style={styles.buttonContainer}>
-                    {/* 红方按钮组 */}
-                    <View style={styles.playerGroup}>
-                        <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>红方</Text>
-                        <View style={styles.buttonGroup}>
-                            <CustomButton
-                                title="认输"
-                                color="#FF0000"
-                                onPress={() => {
-                                    if (flag === 2) { // 只允许红方认输
-                                        alert('红方认输');
-                                        setGameOver(true);
-                                    } else {
-                                        alert('现在不是红方回合，无法认输！');
-                                    }
-                                }}
-                                buttonWidth={buttonWidth}
-                                buttonHeight={buttonHeight}
-                                fontSize={fontSizeButtonText}
-                            />
+                    {/* 所有按钮水平排列 */}
+                    <View style={styles.horizontalButtons}>
+                        <View style={styles.playerGroup}>
+                            <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>红方</Text>
+                            <View style={styles.buttonGroup}>
+                                <CustomButton
+                                    title="认输"
+                                    color="#FF0000"
+                                    onPress={() => {
+                                        if (flag === 2) { // 只允许红方认输
+                                            alert('红方认输');
+                                            setGameOver(true);
+                                        } else {
+                                            alert('现在不是红方回合，无法认输！');
+                                        }
+                                    }}
+                                    buttonWidth={buttonWidth}
+                                    buttonHeight={buttonHeight}
+                                    fontSize={fontSizeButtonText}
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.playerGroup}>
                             <CustomButton
                                 title="悔棋"
-                                color="#FF0000"
+                                color="#808080"
                                 onPress={() => {
-                                    console.log('红方悔棋');
+                                    console.log('悔棋');
                                     setBackMove(true);
                                 }}
-                                disabled={flag === 2}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
                             />
                         </View>
-                    </View>
-                    {/* 黑方按钮组 */}
-                    <View style={styles.playerGroup}>
-                        <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>黑方</Text>
-                        <View style={styles.buttonGroup}>
-                            <CustomButton
-                                title="认输"
-                                color="#000000"
-                                onPress={() => {
-                                    if (flag === 1) { // 只允许黑方认输
-                                        alert('黑方认输');
-                                        setGameOver(true);
-                                    } else {
-                                        alert('现在不是黑方回合，无法认输！');
-                                    }
-                                }}
-                                buttonWidth={buttonWidth}
-                                buttonHeight={buttonHeight}
-                                fontSize={fontSizeButtonText}
-                            />
-                            <CustomButton
-                                title="悔棋"
-                                color="#000000"
-                                onPress={() => {
-                                    console.log('黑方悔棋');
-                                    setBackMove(true);
-                                }}
-                                disabled={flag === 1}
-                                buttonWidth={buttonWidth}
-                                buttonHeight={buttonHeight}
-                                fontSize={fontSizeButtonText}
-                            />
+                        <View style={styles.playerGroup}>
+                            <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>黑方</Text>
+                            <View style={styles.buttonGroup}>
+                                <CustomButton
+                                    title="认输"
+                                    color="#000000"
+                                    onPress={() => {
+                                        if (flag === 1) { // 只允许黑方认输
+                                            alert('黑方认输');
+                                            setGameOver(true);
+                                        } else {
+                                            alert('现在不是黑方回合，无法认输！');
+                                        }
+                                    }}
+                                    buttonWidth={buttonWidth}
+                                    buttonHeight={buttonHeight}
+                                    fontSize={fontSizeButtonText}
+                                />
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -107,19 +97,6 @@ const App = () => {
                         <Text style={[styles.blackPlayerText, { fontSize: fontSizePlayerText }]}>黑方</Text>
                         <View style={styles.buttonGroup}>
                             <CustomButton
-                                title="悔棋"
-                                color="#000000"
-                                onPress={() => {
-                                    console.log('黑方悔棋');
-                                    setBackMove(true);
-                                }}
-                                disabled={flag === 2}
-                                buttonWidth={buttonWidth}
-                                buttonHeight={buttonHeight}
-                                fontSize={fontSizeButtonText}
-                                buttonTextStyles={styles.blackButtonText}
-                            />
-                            <CustomButton
                                 title="认输"
                                 color="#000000"
                                 onPress={() => {
@@ -135,7 +112,6 @@ const App = () => {
                                 fontSize={fontSizeButtonText}
                                 buttonTextStyles={styles.blackButtonText}
                             />
-
                         </View>
                     </View>
                     <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} />
@@ -157,15 +133,16 @@ const App = () => {
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
-                            />
+                            />  
+                        </View>
+                        <View style={styles.playerGroup}>
                             <CustomButton
                                 title="悔棋"
-                                color="#FF0000"
+                                color="#808080"
                                 onPress={() => {
-                                    console.log('红方悔棋');
+                                    console.log('悔棋');
                                     setBackMove(true);
                                 }}
-                                disabled={flag === 1}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
@@ -177,6 +154,7 @@ const App = () => {
         );
     }
 };
+
 
 const CustomButton = ({ title, onPress, color, buttonWidth, buttonHeight, fontSize, buttonTextStyles, disabled }) => (
     <TouchableOpacity
@@ -206,21 +184,27 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 20,
-        flexDirection: 'row', // 水平排列两组
-        justifyContent: 'space-around', // 保持组间距
-        width: '80%', // 按钮区域占屏幕宽度的 80%
+        flexDirection: 'column', // 垂直排列按钮组
+        justifyContent: 'center', // 居中对齐
+        width: '100%', // 按钮区域占屏幕宽度的 100%
+    },
+    horizontalButtons: {
+        flexDirection: 'row', // 水平排列所有按钮
+        justifyContent: 'space-between', // 保持组间距
+        width: '100%', // 按钮区域占屏幕宽度的 100%
+        alignItems: 'center', // 垂直居中
     },
     playerGroup: {
-        flexDirection: 'row', // 水平排列“玩家名”和按钮组
-        alignItems: 'center', // 垂直方向居中
+        flexDirection: 'column', // 垂直排列“玩家名”和按钮组
+        alignItems: 'center', // 水平方向居中
     },
     playerText: {
         color: '#000', // 文字颜色
-        marginRight: 20, // 玩家名与按钮之间的间隔
+        marginBottom: 10, // 玩家名与按钮之间的间隔
     },
     blackPlayerText: {
         color: '#000', // 文字颜色
-        marginRight: 20, // 玩家名与按钮之间的间隔
+        marginBottom: 10, // 玩家名与按钮之间的间隔
         transform: [{ rotate: '180deg' }], // 旋转180度
     },
     buttonGroup: {
