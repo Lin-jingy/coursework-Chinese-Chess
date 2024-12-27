@@ -69,7 +69,7 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
         const shouldRotate = ratio <= aspectRatio && isBlackPiece; // 屏幕更高且是黑方棋子就将机器旋转180度
 
         return (
-            <TouchableOpacity
+            <TouchableOpacity   //只有子组件才会有变透明的效果，而不是每一个单元格都会有
                 key={`${rowIndex}-${colIndex}`}
                 onPress={() => handleCellClick(rowIndex, colIndex)}
                 style={[styles.cell, { width: cellWidth + 1, height: cellHeight + 1 }]}
@@ -188,7 +188,6 @@ const styles = StyleSheet.create({
         fontFamily: 'monospace',
         fontWeight: '600',
         userSelect: 'none',
-        // transition: 'margin 0.5s ease',
     },
 });
 
