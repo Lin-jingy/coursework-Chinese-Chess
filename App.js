@@ -27,7 +27,7 @@ const App = () => {
     // 判断设备类型
     if (width / height > aspectRatio) {
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container}> {/*确保子组件不会被UI遮挡，更好适配*/}
                 <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} refreshBoard={refreshBoard} setRefreshBoard={setRefreshBoard} />
                 <View style={styles.buttonContainer}>
                     {/* 所有按钮水平排列 */}
