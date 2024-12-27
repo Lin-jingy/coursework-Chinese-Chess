@@ -6,6 +6,7 @@ import Knights from "../Chess/Knights";
 import Mandarins from "../Chess/Mandarins";
 import Pawns from "../Chess/Pawns";
 import Rooks from "../Chess/Rooks";
+const clone = require('lodash');
 
 const Board = (function () {
     class BoardClass { }
@@ -24,8 +25,8 @@ const Board = (function () {
         [new Chess(), new Chess(), new Chess(), new Chess(), new Chess(), new Chess(), new Chess(), new Chess(), new Chess()],
         [new Rooks(2), new Knights(2), new Elephants(2), new Mandarins(2), new King(2), new Mandarins(2), new Elephants(2), new Knights(2), new Rooks(2)]
     ];
-    BoardClass.init = BoardClass.board;
-    
+    BoardClass.init = clone.cloneDeep(BoardClass.board);
+
 
     return BoardClass;
 })();
