@@ -5,7 +5,7 @@ import moveChess from './src/Move/moveChess'
 import isWin from './src/Check/isWin';
 const clone = require('lodash');
 
-const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove }) => {
+const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove, refreshBoard,setRefreshBoard}) => {
     const [board, setBoard] = useState([]);
     const [canMoveBoard, setCanMoveBoard] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
