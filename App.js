@@ -67,7 +67,7 @@ const App = () => {
                         </View>
                         <View style={styles.playerGroup}>
                             <CustomButton
-                                title="刷新页面"
+                                title="刷新"
                                 color="#808080"
                                 onPress={() => {
                                     setRefreshBoard(true);
@@ -127,7 +127,7 @@ const App = () => {
                             />
                         </View>
                     </View>
-                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} refreshBoard={refreshBoard} setRefreshBoard={setRefreshBoard}/>
+                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} refreshBoard={refreshBoard} setRefreshBoard={setRefreshBoard} />
                     {/* 红方按钮组 */}
                     <View style={styles.playerGroup}>
                         <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>红方</Text>
@@ -146,7 +146,7 @@ const App = () => {
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
                                 fontSize={fontSizeButtonText}
-                            />  
+                            />
                         </View>
                         <View style={styles.playerGroup}>
                             <CustomButton
@@ -163,7 +163,7 @@ const App = () => {
                         </View>
                         <View style={styles.playerGroup}>
                             <CustomButton
-                                title="刷新页面"
+                                title="刷新"
                                 color="#808080"
                                 onPress={() => {
                                     setRefreshBoard(true);
