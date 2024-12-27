@@ -35,7 +35,7 @@ function deepCopy(obj) {
 }
 
 
-const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove }) => {
+const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove, refreshBoard,setRefreshBoard}) => {
     const [board, setBoard] = useState([]);
     const [canMoveBoard, setCanMoveBoard] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);

@@ -10,6 +10,7 @@ const App = () => {
     const [gameOver, setGameOver] = useState(false);
     const [flag, setFlag] = useState(2); // 1 表示黑方，2 表示红方
     const [backMove, setBackMove] = useState(false);
+    const [refreshBoard, setRefreshBoard] = useState(false);
     const switchPlayer = () => setFlag(3 - flag); // 切换玩家
 
     // 计算按钮和文字的样式
@@ -27,7 +28,7 @@ const App = () => {
     if (width / height > aspectRatio) {
         return (
             <SafeAreaView style={styles.container}>
-                <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} />
+                <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} refreshBoard={refreshBoard} setRefreshBoard={setRefreshBoard} />
                 <View style={styles.buttonContainer}>
                     {/* 所有按钮水平排列 */}
                     <View style={styles.horizontalButtons}>
@@ -58,6 +59,18 @@ const App = () => {
                                 onPress={() => {
                                     console.log('悔棋');
                                     setBackMove(true);
+                                }}
+                                buttonWidth={buttonWidth}
+                                buttonHeight={buttonHeight}
+                                fontSize={fontSizeButtonText}
+                            />
+                        </View>
+                        <View style={styles.playerGroup}>
+                            <CustomButton
+                                title="刷新页面"
+                                color="#808080"
+                                onPress={() => {
+                                    setRefreshBoard(true);
                                 }}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
@@ -114,7 +127,7 @@ const App = () => {
                             />
                         </View>
                     </View>
-                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} />
+                    <ShowBoard gameOver={gameOver} flag={flag} switchPlayer={switchPlayer} setGameOver={setGameOver} backMove={backMove} setBackMove={setBackMove} refreshBoard={refreshBoard} setRefreshBoard={setRefreshBoard}/>
                     {/* 红方按钮组 */}
                     <View style={styles.playerGroup}>
                         <Text style={[styles.playerText, { fontSize: fontSizePlayerText }]}>红方</Text>
@@ -142,6 +155,18 @@ const App = () => {
                                 onPress={() => {
                                     console.log('悔棋');
                                     setBackMove(true);
+                                }}
+                                buttonWidth={buttonWidth}
+                                buttonHeight={buttonHeight}
+                                fontSize={fontSizeButtonText}
+                            />
+                        </View>
+                        <View style={styles.playerGroup}>
+                            <CustomButton
+                                title="刷新页面"
+                                color="#808080"
+                                onPress={() => {
+                                    setRefreshBoard(true);
                                 }}
                                 buttonWidth={buttonWidth}
                                 buttonHeight={buttonHeight}
