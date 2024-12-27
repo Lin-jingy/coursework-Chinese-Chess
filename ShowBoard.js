@@ -5,7 +5,7 @@ import moveChess from './src/Move/moveChess'
 import isWin from './src/Check/isWin';
 const clone = require('lodash');
 
-const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove, refreshBoard,setRefreshBoard}) => {
+const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove, refreshBoard, setRefreshBoard }) => {
     const [board, setBoard] = useState([]);
     const [canMoveBoard, setCanMoveBoard] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
@@ -30,6 +30,18 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
             setBackMove(false);
         }
     }, [backMove]);
+
+    useEffect(() => {
+        if (!refreshBoard) return;
+        Board.board = clone.cloneDeep(Board.init);
+        setBoard(Board.board);
+        setCanMoveBoard(initCanMoveBoard());
+        setSelectedPiece(null);
+        saveBoard(null);
+        setBackMove(false);
+        setGameOver(false);
+        setRefreshBoard(false);
+    }, [refreshBoard]);
 
     const { width, height } = Dimensions.get('window');
     const numRows = 10;
