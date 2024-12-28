@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, TouchableOpacity, Text, View, Dimensions, Alert } from 'react-native';
 import ShowBoard from './ShowBoard';
-import Board from './src/Board/Board';
 
 const App = () => {
     const { width, height } = Dimensions.get('window');
