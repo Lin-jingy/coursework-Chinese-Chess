@@ -6,11 +6,11 @@ import isWin from './src/Check/isWin';
 const clone = require('lodash');
 
 const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBackMove, refreshBoard, setRefreshBoard }) => {
-    const [board, setBoard] = useState([]);
-    const [canMoveBoard, setCanMoveBoard] = useState([]);
-    const [selectedPiece, setSelectedPiece] = useState(null);
-    const [savedBoard, saveBoard] = useState(Board.init);
-    const initCanMoveBoard = () => { return Array.from(Array(10), () => Array(9).fill(false)); };
+    const [board, setBoard] = useState([]);//棋盘
+    const [canMoveBoard, setCanMoveBoard] = useState([]);//显示可移动位置
+    const [selectedPiece, setSelectedPiece] = useState(null);//选中的棋子
+    const [savedBoard, saveBoard] = useState(Board.init);//保存棋盘，用于悔棋
+    const initCanMoveBoard = () => { return Array.from(Array(10), () => Array(9).fill(false)); };//初始化可移动位置
 
 
     useEffect(() => {
@@ -26,13 +26,13 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
             Board.board = savedBoard;
             setBoard(Board.board);
             switchPlayer();
-            saveBoard(null);
+            saveBoard(null);//清除保存的棋盘
             setBackMove(false);
         }
     }, [backMove]);
 
     useEffect(() => {
-        if (!refreshBoard) return;
+        if (!refreshBoard) return;//是否刷新棋盘判断
         Board.board = clone.cloneDeep(Board.init);
         setBoard(Board.board);
         setCanMoveBoard(initCanMoveBoard());
@@ -46,10 +46,11 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
     const { width, height } = Dimensions.get('window');
     const numRows = 10;
     const numCols = 9;
-    const aspectRatio = numCols / numRows; // 棋盘的宽高比
+    const aspectRatio = numCols / numRows; //棋盘的宽高比
     const ratio = width / height;
 
     let boardWidth, boardHeight;
+    // 根据屏幕宽高比动态设置棋盘的宽度和高度
     if (ratio > aspectRatio) {
         // 屏幕更宽，按高度计算
         boardHeight = height * 0.8;
@@ -62,7 +63,7 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
 
     const cellWidth = boardWidth / numCols;
     const cellHeight = boardHeight / numRows;
-
+    // 渲染棋盘单元格
     const renderCell = (cell, rowIndex, colIndex) => {
         const fontSize = Math.min(cellWidth, cellHeight) * 0.6;//动态设定大小
         const isBlackPiece = cell.type === 1;
@@ -75,17 +76,17 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
                 style={[styles.cell, { width: cellWidth + 1, height: cellHeight + 1 }]}
             >
 
-                {cell.type !== 0 && (
+                {cell.type !== 0 && (//位置上有棋子才放置
                     <Text style={[
                         styles.chess,
                         { fontSize },
-                        { color: cell.type === 2 ? 'red' : 'black' },
+                        { color: cell.type === 2 ? 'red' : 'black' },//对不同颜色的棋子设置不同样式
                         shouldRotate && styles.rotatedChess
                     ]}>
                         {cell.name}
                     </Text>
                 )}
-                {canMoveBoard[rowIndex][colIndex] && (
+                {canMoveBoard[rowIndex][colIndex] && (//设置可移动位置的样式
                     <View style={styles.intersection} />
                 )}
             </TouchableOpacity>
@@ -97,10 +98,11 @@ const ShowBoard = ({ gameOver, flag, switchPlayer, setGameOver, backMove, setBac
         const chess = board[rowIndex][colIndex];
 
         if (gameOver) return;
+        // 如果点击的是一个可以移动到的位置
         if (canMoveBoard[rowIndex][colIndex]) {
-            // 如果点击的是一个可以移动到的位置
+            // 如果已经点击过了棋子
             if (selectedPiece) {
-                saveBoard(clone.cloneDeep(Board.board));
+                saveBoard(clone.cloneDeep(Board.board));//保存棋盘
                 if (moveChess(selectedPiece.row, selectedPiece.col, rowIndex, colIndex)) {
                     setBoard(Board.board);
                     setCanMoveBoard(initCanMoveBoard());

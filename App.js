@@ -4,22 +4,21 @@ import ShowBoard from './ShowBoard';
 
 const App = () => {
     const { width, height } = Dimensions.get('window');
-    const aspectRatio = 0.9;
+    const aspectRatio = 1;//设定基准页面比例，与w/h比较，用于判断横屏还是竖屏
 
-    const [gameOver, setGameOver] = useState(false);
+    const [gameOver, setGameOver] = useState(false);//判断游戏是否结束
     const [flag, setFlag] = useState(2); // 1 表示黑方，2 表示红方
-    const [backMove, setBackMove] = useState(false);
-    const [refreshBoard, setRefreshBoard] = useState(false);
+    const [backMove, setBackMove] = useState(false);//是否悔棋
+    const [refreshBoard, setRefreshBoard] = useState(false);//重新加载棋盘
     const switchPlayer = () => setFlag(3 - flag); // 切换玩家
 
     // 计算按钮和文字的样式
     const buttonWidth = width * 0.2; // 按钮宽度为屏幕宽度的 20%
     const buttonHeight = height * 0.05; // 按钮高度为屏幕高度的 5%
-    let fontSizePlayerText = height * 0.05;
-    if (width / height > 1)
-        fontSizePlayerText = height * 0.05;
-    else
+    let fontSizePlayerText = height * 0.05;//按钮文字字体大小为屏幕高度的 5%
+    if (width / height < 1)
         fontSizePlayerText = width * 0.05;
+    
     // 玩家名字体大小为屏幕高度的 5%
     const fontSizeButtonText = height * 0.03; // 按钮文字字体大小为屏幕高度的 3%
 
